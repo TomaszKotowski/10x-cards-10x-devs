@@ -1,93 +1,74 @@
-# 10x Astro Starter
+# Vibe Travels
 
-A modern, opinionated starter template for building fast, accessible, and AI-friendly web applications.
+## Table of Contents
+
+- [Description](#description)
+- [Tech Stack](#tech-stack)
+- [Getting Started Locally](#getting-started-locally)
+- [Available Scripts](#available-scripts)
+- [Project Scope](#project-scope)
+- [Project Status](#project-status)
+- [License](#license)
+
+## Description
+
+Vibe Travels is a responsive web application that simplifies trip planning by leveraging AI to transform user notes and preferences into detailed, personalized travel plans. It addresses the challenges of planning engaging trips by automating the process, considering factors like budget, interests, and pace, as outlined in the product requirements document.
 
 ## Tech Stack
 
-- [Astro](https://astro.build/) v5.5.5 - Modern web framework for building fast, content-focused websites
-- [React](https://react.dev/) v19.0.0 - UI library for building interactive components
-- [TypeScript](https://www.typescriptlang.org/) v5 - Type-safe JavaScript
-- [Tailwind CSS](https://tailwindcss.com/) v4.0.17 - Utility-first CSS framework
+- Astro 5
+- TypeScript 5
+- React 19
+- Tailwind 4
 
-## Prerequisites
+## Getting Started Locally
 
-- Node.js v22.14.0 (as specified in `.nvmrc`)
-- npm (comes with Node.js)
+1. Ensure Node.js **v22.14.0** is installed (as specified in `.nvmrc`).
+2. Clone the repository:
 
-## Getting Started
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/przeprogramowani/10x-astro-starter.git
-cd 10x-astro-starter
+```
+git clone https://github.com/TomaszKotowski/vibe-travels-10x-devs.git
+cd vibe-travels-10x-devs
 ```
 
-2. Install dependencies:
+3. Install dependencies:
 
-```bash
+```
 npm install
 ```
 
-3. Run the development server:
+4. Run the development server:
 
-```bash
-npm run dev
 ```
-
-4. Build for production:
-
-```bash
-npm run build
+npm run dev
 ```
 
 ## Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint issues
+- **`npm run dev`**: Start development server
+- **`npm run build`**: Build for production
+- **`npm run preview`**: Preview production build
+- **`npm run lint`**: Run ESLint
+- **`npm run lint:fix`**: Fix ESLint issues
 
-## Project Structure
+## Project Scope
 
-```md
-.
-├── src/
-│   ├── layouts/    # Astro layouts
-│   ├── pages/      # Astro pages
-│   │   └── api/    # API endpoints
-│   ├── components/ # UI components (Astro & React)
-│   └── assets/     # Static assets
-├── public/         # Public assets
-```
+### In Scope for MVP
 
-## AI Development Support
+- User account management and profile preferences
+- AI-generated travel plans based on user input and preferences
+- Viewing, editing, and deleting saved plans
+- Basic feedback system
 
-This project is configured with AI development tools to enhance the development experience, providing guidelines for:
+### Out of Scope for MVP
 
-- Project structure
-- Coding practices
-- Frontend development
-- Styling with Tailwind
-- Accessibility best practices
-- Astro and React guidelines
+- Sharing plans with others
+- External API integrations (e.g., maps, bookings)
+- Advanced logistics and multimedia handling
 
-### Cursor IDE
+## Project Status
 
-The project includes AI rules in `.cursor/rules/` directory that help Cursor IDE understand the project structure and provide better code suggestions.
-
-### GitHub Copilot
-
-AI instructions for GitHub Copilot are available in `.github/copilot-instructions.md`
-
-### Windsurf
-
-The `.windsurfrules` file contains AI configuration for Windsurf.
-
-## Contributing
-
-Please follow the AI guidelines and coding practices defined in the AI configuration files when contributing to this project.
+This is an MVP in development. Current version: 0.0.1. The project focuses on core functionality for trip planning and is aimed at meeting initial user needs as defined in the PRD.
 
 ## License
 
