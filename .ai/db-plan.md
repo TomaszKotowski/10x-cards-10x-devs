@@ -23,6 +23,8 @@ create type travel_pace as enum ('SLOW', 'STANDARD', 'FAST');
 create type audit_action as enum ('insert', 'update', 'delete');
 ```
 
+
+
 ### 1.2. public.profiles
 
 Profil użytkownika powiązany 1–1 z `auth.users` (Supabase). Wpis tworzony triggerem po rejestracji.
@@ -81,9 +83,7 @@ create table if not exists public.trips (
     check (jsonb_typeof(destination_meta) = 'object')
 );
 
-alter table public.trips
-  add constraint trips_current_version_fk
-  foreign key (current_version_id) references public.plan_versions (id) deferrable initially deferred;
+-- (FK do plan_versions dodany po utworzeniu tabeli plan_versions)
 ```
 
 Uwaga: FK do `plan_versions` jest zadeklarowany jako deferrable, ponieważ wskazanie wersji następuje zwykle po utworzeniu pierwszego snapshotu.
@@ -150,6 +150,13 @@ create table if not exists public.plan_versions (
 );
 ```
 
+```sql
+-- FK 'current_version_id' w trips → plan_versions
+alter table public.trips
+  add constraint trips_current_version_fk
+  foreign key (current_version_id) references public.plan_versions (id) deferrable initially deferred;
+```
+
 ### 1.7. public.generation_runs
 
 Rejestr przebiegów generowania AI (wejście/wyjście, status, ewentualny błąd).
@@ -158,7 +165,7 @@ Rejestr przebiegów generowania AI (wejście/wyjście, status, ewentualny błąd
 create table if not exists public.generation_runs (
   id            uuid primary key default gen_random_uuid(),
   trip_id       uuid not null references public.trips (id) on delete cascade,
-  triggered_by  uuid not null references public.profiles (id) on delete set null,
+  triggered_by  uuid references public.profiles (id) on delete set null,
   version_id    uuid references public.plan_versions (id) on delete set null,
   model         text not null,
   input         jsonb not null default '{}'::jsonb,
