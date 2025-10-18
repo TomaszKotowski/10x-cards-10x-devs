@@ -3,9 +3,45 @@ description:
 globs: 
 alwaysApply: true
 ---
-# AI Rules for {app-name}
+# Aplikacja - 10x-cards (MVP)
 
-{project-description}
+### Główny problem
+Manualne tworzenie wysokiej jakości fiszek edukacyjnych jest czasochłonne, co zniechęca do korzystania z efektywnej metody nauki jaką jest spaced repetition.
+
+### Najmniejszy zestaw funkcjonalności
+- Generowanie fiszek przez AI na podstawie wprowadzonego tekstu (kopiuj-wklej)
+- Manualne tworzenie fiszek
+- Przeglądanie, edycja i usuwanie fiszek
+- Prosty system kont użytkowników do przechowywania fiszek
+- Integracja fiszek z gotowym algorytmem powtórek
+
+### Co NIE wchodzi w zakres MVP
+- Własny, zaawansowany algorytm powtórek (jak SuperMemo, Anki)
+- Import wielu formatów (PDF, DOCX, itp.)
+- Współdzielenie zestawów fiszek między użytkownikami
+- Integracje z innymi platformami edukacyjnymi
+- Aplikacje mobilne (na początek tylko web)
+
+### Kryteria sukcesu
+- 75% fiszek wygenerowanych przez AI jest akceptowane przez użytkownika
+- Użytkownicy tworzą 75% fiszek z wykorzystaniem AI
+
+## Project Structure
+
+When introducing changes to the project, always follow the directory structure below:
+
+- `./src` - source code
+- `./src/layouts` - Astro layouts
+- `./src/pages` - Astro pages
+- `./src/pages/api` - API endpoints
+- `./src/middleware/index.ts` - Astro middleware
+- `./src/db` - Supabase clients and types
+- `./src/types.ts` - Shared types for backend and frontend (Entities, DTOs)
+- `./src/components` - Client-side components written in Astro (static) and React (dynamic)
+- `./src/components/ui` - Client-side components from Shadcn/ui
+- `./src/lib` - Services and helpers
+- `./src/assets` - static internal assets
+- `./public` - public assets
 
 ## Tech Stack
 

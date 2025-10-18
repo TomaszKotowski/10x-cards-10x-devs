@@ -4,37 +4,32 @@ trigger: always_on
 
 # AI Rules for VibeTravels
 
-# Aplikacja - VibeTravels (MVP)
+# Aplikacja - 10x-cards (MVP)
 
 ### Główny problem
 
-Planowanie angażujących i interesujących wycieczek jest trudne. Dzięki wykorzystaniu potencjału, kreatywności i wiedzy AI, w VibeTravels możesz zamieniać uproszczone notatki o miejscach i celach podróży na konkretne plany.
+Manualne tworzenie wysokiej jakości fiszek edukacyjnych jest czasochłonne, co zniechęca do korzystania z efektywnej metody nauki jaką jest spaced repetition.
 
 ### Najmniejszy zestaw funkcjonalności
 
-- Zapisywanie, odczytywanie, przeglądanie i usuwanie notatek o przyszłych wycieczkach
-- Prosty system kont użytkowników do powiązania użytkownika z notatkami
-- Strona profilu użytkownika służąca do zapisywania preferencji turystycznych
-- Integracja z AI umożliwiająca konwersję notatek w szczegółowe plany, biorące pod uwagę preferencje, czas, liczbę osób oraz potencjalne miejsca i atrakcje
+- Generowanie fiszek przez AI na podstawie wprowadzonego tekstu (kopiuj-wklej)
+- Manualne tworzenie fiszek
+- Przeglądanie, edycja i usuwanie fiszek
+- Prosty system kont użytkowników do przechowywania fiszek
+- Integracja fiszek z gotowym algorytmem powtórek
 
 ### Co NIE wchodzi w zakres MVP
 
-- Współdzielenie planów wycieczkowych między kontami
-- Bogata obsługa i analiza multimediów (np. zdjęć miejsc do odwiedzenia)
-- Zaawansowane planowanie czasu i logistyki
+- Własny, zaawansowany algorytm powtórek (jak SuperMemo, Anki)
+- Import wielu formatów (PDF, DOCX, itp.)
+- Współdzielenie zestawów fiszek między użytkownikami
+- Integracje z innymi platformami edukacyjnymi
+- Aplikacje mobilne (na początek tylko web)
 
 ### Kryteria sukcesu
 
-- 90% użytkowników posiada wypełnione preferencje turystyczne w swoim profilu
-- 75% użytkowników generuje 3 lub więcej planów wycieczek na rok
-
-## Tech Stack
-
-- Astro 5
-- TypeScript 5
-- React 19
-- Tailwind 4
-- Shadcn/ui
+- 75% fiszek wygenerowanych przez AI jest akceptowane przez użytkownika
+- Użytkownicy tworzą 75% fiszek z wykorzystaniem AI
 
 ## Project Structure
 
