@@ -1,224 +1,494 @@
-# Dokument wymagań produktu (PRD) - VibeTravels (MVP)
+# Dokument wymagań produktu (PRD) - Fiszki AI
 
 ## 1. Przegląd produktu
 
-VibeTravels to responsywna aplikacja webowa zaprojektowana w celu uproszczenia procesu planowania podróży. Aplikacja wykorzystuje sztuczną inteligencję (AI) do przekształcania podstawowych notatek i preferencji użytkownika w szczegółowe, spersonalizowane plany podróży. Celem wersji MVP (Minimum Viable Product) jest dostarczenie kluczowej funkcjonalności, która pozwoli użytkownikom szybko i bez wysiłku generować, zapisywać i zarządzać planami wycieczek, eliminując trudności związane z samodzielnym wyszukiwaniem atrakcji i planowaniem logistyki.
+Fiszki AI to webowa aplikacja dla studentów uczelni wyższych, ułatwiająca szybkie tworzenie i naukę materiału przy użyciu fiszek w metodzie spaced repetition. Aplikacja umożliwia generowanie fiszek przez AI na podstawie wklejonego tekstu oraz ręczne tworzenie fiszek, organizowanie ich w talie i naukę w trybie powtórek z prostym algorytmem oceny odpowiedzi.
+
+Cel produktu:
+
+- Zmniejszyć czas i wysiłek potrzebny do tworzenia wartościowych fiszek.
+- Zwiększyć adopcję efektywnej metody nauki opartej o powtórki rozłożone w czasie.
+
+Grupa docelowa:
+
+- Studenci uczelni wyższych przygotowujący się do egzaminów, kolokwiów i projektów.
+
+Platforma i technologia:
+
+- Web (desktop i mobile web w przeglądarce).
+- System kont i uwierzytelnianie przez Supabase (email/hasło).
+- AI dla generowania fiszek na podstawie tekstu.
+- Brak modelu płatności w MVP.
+
+Kluczowe wyróżniki:
+
+- Generacja fiszek przez AI z wklejonego materiału (do 10 000 znaków).
+- Przejrzysty, szybki flow akceptacji i edycji fiszek.
+- Prosty, zrozumiały tryb nauki z dwoma przyciskami oceny.
 
 ## 2. Problem użytkownika
 
-Planowanie angażujących i interesujących podróży jest procesem czasochłonnym i często frustrującym. Użytkownicy stają przed wyzwaniem znalezienia odpowiednich atrakcji, efektywnego zorganizowania każdego dnia wycieczki oraz uwzględnienia logistyki, takiej jak transport. Próba połączenia różnych zainteresowań, budżetu i tempa podróży w spójny plan może być przytłaczająca. VibeTravels adresuje ten problem, automatyzując proces planowania i dostarczając gotowe, spersonalizowane plany, co pozwala użytkownikom oszczędzić czas i skupić się na czerpaniu przyjemności z podróży.
+Tworzenie wysokiej jakości fiszek jest czasochłonne, a konsekwentne stosowanie metody spaced repetition wymaga dyscypliny i narzędzi. Studenci często rezygnują z fiszek, bo:
+
+- Ręczne destylowanie materiału do pytań i odpowiedzi zajmuje dużo czasu.
+- Brakuje prostego narzędzia łączącego generowanie treści i naukę.
+- Istniejące narzędzia bywają złożone i mają stromy próg wejścia.
+
+Fiszki AI usuwa te bariery, pozwalając szybko wygenerować fiszki, łatwo je poprawić i natychmiast zacząć naukę.
 
 ## 3. Wymagania funkcjonalne
 
-### 3.1. Zarządzanie kontem i profilem użytkownika
+3.1. Uwierzytelnianie i konta (Supabase)
 
-- Użytkownicy muszą mieć możliwość założenia konta i logowania się.
-- Każdy użytkownik posiada swój profil, w którym może zdefiniować i zaktualizować swoje preferencje podróżnicze.
-- Po rejestracji uruchamiany jest krótki proces onboardingu w celu zebrania podstawowych preferencji, z możliwością jego pominięcia.
+- Rejestracja email/hasło, logowanie, wylogowanie.
+- Reset hasła przez email.
+- Tylko właściciel ma dostęp do swoich talii i fiszek.
+- Sesja użytkownika utrzymywana w bezpieczny sposób (tokeny Supabase).
 
-### 3.2. Preferencje użytkownika
+  3.2. Generowanie fiszek przez AI
 
-Preferencje, które można zdefiniować, obejmują:
+- Pole tekstowe na wklejenie treści do 10 000 znaków (licznik znaków i walidacja).
+- Przycisk uruchamiający generowanie; limit 15 generacji na użytkownika na ruchome 24h.
+- W przypadku błędu AI czy limitu – czytelny komunikat i możliwość ponownej próby po spełnieniu warunków.
+- Prezentacja wygenerowanych fiszek w formacie Pytanie/Odpowiedź.
 
-- Budżet: (jednokrotny wybór) Budżetowo, Standardowo, Bez limitu.
-- Zainteresowania: (wielokrotny wybór) np. Historia, Sztuka, Przyroda, Rozrywka.
-- Rodzaj kuchni: (wielokrotny wybór) np. Włoska, Azjatycka, Wegetariańska.
-- Tempo podróży: (jednokrotny wybór) Wolne, Standardowe, Intensywne.
-- Preferowany transport: (wielokrotny wybór) np. Głównie pieszo/komunikacja miejska, Samochód.
+  3.3. Przegląd, edycja i akceptacja wygenerowanych fiszek
 
-### 3.3. Generator Planów AI
+- Lista fiszek z możliwością edycji treści.
+- Akceptacja lub odrzucenie pojedynczych fiszek.
+- Funkcja zaznacz/odznacz wszystkie do masowej akceptacji/odrzucenia.
+- Po akceptacji co najmniej 1 fiszki – krok nadania nazwy talii i zapis.
+- Odrzucone fiszki nie są zapisywane ani archiwizowane (MVP).
 
-- Główna funkcja aplikacji, która generuje plan podróży na podstawie danych wejściowych.
-- Dane wejściowe to formularz zawierający: Miasto, Daty, Liczba osób.
-- Użytkownik może dodać opcjonalne pole tekstowe (Notatki dla AI) w celu sprecyzowania swoich oczekiwań.
-- Generator uwzględnia preferencje zapisane w profilu użytkownika.
+  3.4. Organizacja treści w talie
 
-### 3.4. Wyświetlanie i zarządzanie planami
+- Po zakończonej akceptacji użytkownik nadaje nazwę nowej talii.
+- Talia zawiera zaakceptowane fiszki.
+- Widok listy talii użytkownika z podstawowymi informacjami (nazwa, liczba fiszek).
 
-- Wygenerowane plany są prezentowane w formacie "dzień po dniu".
-- Plan zawiera listę atrakcji, szacunkowe czasy transportu oraz oznaczenia "płatne/darmowe".
-- Każdy plan zawiera informację o orientacyjnym charakterze danych.
-- Użytkownicy mogą zapisywać, przeglądać, edytować i usuwać swoje plany.
-- Zapisane plany są dostępne na ekranie głównym (dashboard) w formie chronologicznej listy.
-- Nazwy planów są generowane automatycznie, z możliwością późniejszej edycji.
+  3.5. Zarządzanie taliami i fiszkami
 
-### 3.5. Interfejs użytkownika i doświadczenie
+- Zmiana nazwy talii.
+- Trwałe usuwanie talii z potwierdzeniem (usuwa wszystkie fiszki danej talii).
+- Przeglądanie fiszek w talii, edycja i usuwanie pojedynczych fiszek z potwierdzeniem.
 
-- Aplikacja musi być responsywna (RWD), działająca na urządzeniach mobilnych i desktopowych.
-- Dashboard po zalogowaniu wyświetla listę planów lub, w przypadku jej braku, wyraźne wezwanie do działania w celu stworzenia pierwszej podróży.
-- W przypadku błędu generowania planu, użytkownik otrzymuje czytelny i przyjazny komunikat.
-- Mają być spełnione podstowowe wymagania WCAG
+  3.6. Ręczne tworzenie fiszek
 
-### 3.6. System zbierania opinii
+- Formularz dodania fiszki z polami Pytanie i Odpowiedź.
+- Dodawanie do istniejącej talii lub utworzenie nowej talii przy dodawaniu.
+- Walidacja pustych pól.
 
-- Pod każdym wygenerowanym planem znajduje się prosty system oceny (kciuk w górę / kciuk w dół).
-- Użytkownik ma możliwość dodania opcjonalnego komentarza do swojej oceny.
+  3.7. Tryb nauki i prosty algorytm powtórek
+
+- Uruchomienie sesji nauki dla wybranej talii.
+- Prezentacja pytania (awers); po akcji użytkownika ujawnienie odpowiedzi (rewers).
+- Dwa przyciski samooceny: Wiem / Nie wiem.
+- Najprostszy algorytm (Leitner 3-pudełkowy):
+  - Każda fiszka ma poziom 1–3; start od 1.
+  - Wiem: poziom +1 (max 3). Nie wiem: poziom = 1.
+  - Harmonogram powtórek według poziomu:
+    - Poziom 1: powtórka za 1 dzień.
+    - Poziom 2: powtórka za 3 dni.
+    - Poziom 3: powtórka za 7 dni.
+  - Fiszki due (termin powtórki ≤ teraz) trafiają do sesji; jeśli po stworzeniu talii brak terminów, fiszki są due natychmiast (start nauki możliwy od razu).
+  - Kolejność fiszek w sesji może być losowa.
+- Zakończenie sesji po wyczerpaniu due fiszek.
+
+  3.8. Onboarding i puste stany
+
+- Nowy użytkownik widzi ekran powitalny z CTA do stworzenia pierwszej talii przez AI.
+- Krótkie wskazówki krok po kroku (wklej tekst → generuj → zaakceptuj → nazwij talię → ucz się).
+
+  3.9. Zgłaszanie problemu z fiszką
+
+- Opcja zgłoszenia problemu z fiszką (np. niepoprawna treść).
+- Prosty formularz (krótki opis).
+- Po wysłaniu – komunikat potwierdzający. Zgłoszenia zapisywane do dalszej analizy (bez panelu administracyjnego w MVP).
+
+  3.10. Ograniczenia i walidacje
+
+- Limit wejścia generacji: 10 000 znaków.
+- Limit generacji: 15 na użytkownika na ruchome 24h.
+- Nazwa talii wymagana i niepusta.
+- Zapis talii możliwy tylko, gdy zaakceptowano ≥ 1 fiszkę.
+
+  3.11. Telemetria i analityka (pod metryki sukcesu)
+
+- Zdarzenia: generacja_ai_start/success/fail, ai_generation_quota_hit, deck_created, card_created_manual, study_session_start/end, study_card_show_answer, study_card_rate_known/unknown, password_reset_requested, signup_success.
+- Agregacje: odsetek akceptacji fiszek AI, udział fiszek AI vs manualnych, sesje nauki/tydzień/użytkownika, retencja D7.
 
 ## 4. Granice produktu
 
-### W zakresie MVP:
+W zakresie MVP:
 
-- Prosty system tworzenia kont użytkowników (rejestracja, logowanie).
-- Profil użytkownika z możliwością zapisania i edycji preferencji podróżniczych.
-- Generator planów podróży oparty o model LLM, wykorzystujący dane z formularza, notatki i preferencje użytkownika.
-- Funkcjonalność CRUD (Create, Read, Update, Delete) dla planów podróży (zapisywanie, przeglądanie, edycja nazwy, usuwanie).
-- Responsywny interfejs webowy.
-- Podstawowa analityka do mierzenia kryteriów sukcesu.
-- System zbierania opinii o planach (ocena i komentarz).
+- Generowanie fiszek przez AI z tekstu wklejonego (do 10 000 znaków).
+- Ręczne tworzenie, edycja i usuwanie fiszek.
+- Organizacja w talie, zmiana nazwy i usuwanie talii.
+- Prosty algorytm powtórek (Leitner 3 poziomy, interwały 1/3/7 dni).
+- Uwierzytelnianie email/hasło (Supabase).
+- Zgłaszanie problemów z fiszkami.
+- Limit 15 generacji/dobę na użytkownika.
 
-### Poza zakresem MVP:
+Poza zakresem MVP:
 
-- Współdzielenie planów podróży między użytkownikami.
-- Integracja z zewnętrznymi API (np. Google Maps, systemy rezerwacji biletów/hoteli).
-- Zaawansowane planowanie logistyki (rezerwacje, dokładne czasy przejazdów w czasie rzeczywistym).
-- Obsługa i analiza multimediów (np. wgrywanie zdjęć).
-- Funkcje społecznościowe (np. komentowanie planów innych użytkowników, system znajomych).
+- Własny, zaawansowany algorytm powtórek (np. SM-2).
+- Import z plików (PDF, DOCX, itp.).
+- Współdzielenie talii, współpraca wielu użytkowników.
+- Integracje z zewnętrznymi platformami edukacyjnymi.
+- Aplikacje mobilne natywne.
+- Przechowywanie odrzuconych fiszek do analizy.
+- Panele administracyjne i moderacja treści.
+
+Założenia techniczne i ograniczenia:
+
+- Web wyłącznie; responsywność podstawowa.
+- Brak trybu offline.
+- Zarządzanie kosztami AI poprzez limity i walidacje.
+- Bezpieczeństwo dostępu oparte o RLS i właścicielstwo danych (tylko własne zasoby użytkownika).
 
 ## 5. Historyjki użytkowników
 
-### Zarządzanie kontem i Onboarding
+US-001  
+Tytuł: Rejestracja konta email/hasło  
+Opis: Jako nowy użytkownik chcę założyć konto, aby móc tworzyć talie i fiszki.  
+Kryteria akceptacji:
 
-- ID: US-001
-- Tytuł: Rejestracja nowego użytkownika
-- Opis: Jako nowy użytkownik, chcę móc założyć konto za pomocą adresu e-mail i hasła, aby móc zapisywać swoje plany podróży i preferencje.
-- Kryteria akceptacji:
-  - Formularz rejestracji zawiera pola na e-mail i hasło (z potwierdzeniem).
-  - System waliduje poprawność formatu adresu e-mail.
-  - System wymaga bezpiecznego hasła (np. min. 8 znaków).
-  - Po pomyślnej rejestracji użytkownik jest automatycznie zalogowany i przekierowany do procesu onboardingu.
-  - W przypadku, gdy e-mail jest już zajęty, wyświetlany jest odpowiedni komunikat błędu.
+- Po podaniu poprawnego emaila i hasła konto zostaje utworzone i użytkownik jest zalogowany.
+- Przy błędnym emailu/haśle pojawia się komunikat walidacyjny.
+- Hasło jest przechowywane bezpiecznie (Supabase).
 
-- ID: US-002
-- Tytuł: Logowanie do aplikacji
-- Opis: Jako zarejestrowany użytkownik, chcę móc zalogować się na swoje konto, aby uzyskać dostęp do moich zapisanych planów i preferencji.
-- Kryteria akceptacji:
-  - Formularz logowania zawiera pola na e-mail i hasło.
-  - Po pomyślnym zalogowaniu, użytkownik jest przekierowany na swój panel główny (dashboard).
-  - W przypadku podania błędnych danych, wyświetlany jest komunikat "Nieprawidłowy e-mail lub hasło".
-  - Użytkownik pozostaje zalogowany podczas trwania sesji.
+US-002  
+Tytuł: Logowanie  
+Opis: Jako użytkownik chcę się zalogować, aby mieć dostęp do moich talii i fiszek.  
+Kryteria akceptacji:
 
-- ID: US-003
-- Tytuł: Przejście procesu onboardingu
-- Opis: Jako nowy użytkownik, po pierwszej rejestracji, chcę przejść przez krótki proces konfiguracji, aby ustawić swoje podstawowe preferencje podróżnicze.
-- Kryteria akceptacji:
-  - Onboarding składa się z 2-3 kroków.
-  - Każdy krok pozwala na ustawienie jednej lub kilku preferencji (Budżet, Zainteresowania, Tempo itp.).
-  - Użytkownik może zapisać preferencje na ostatnim kroku.
-  - Po zakończeniu onboardingu użytkownik jest przekierowany na dashboard.
+- Poprawne dane logują użytkownika i przekierowują do widoku talii lub ekranu powitalnego.
+- Błędne dane skutkują komunikatem o błędzie.
+- Sesja jest utrzymywana do wylogowania lub wygaśnięcia.
 
-- ID: US-004
-- Tytuł: Pominięcie procesu onboardingu
-- Opis: Jako nowy użytkownik, chcę mieć możliwość pominięcia procesu onboardingu, aby szybciej przejść do aplikacji.
-- Kryteria akceptacji:
-  - Na każdym kroku onboardingu widoczny jest przycisk lub link "Pomiń".
-  - Kliknięcie go przenosi użytkownika bezpośrednio na dashboard.
-  - Pominięcie onboardingu nie zapisuje żadnych preferencji.
+US-003  
+Tytuł: Wylogowanie  
+Opis: Jako użytkownik chcę się wylogować, aby zakończyć sesję.  
+Kryteria akceptacji:
 
-### Zarządzanie profilem
+- Po kliknięciu wyloguj sesja jest unieważniana.
+- Użytkownik jest przenoszony do ekranu logowania.
 
-- ID: US-005
-- Tytuł: Zarządzanie preferencjami w profilu
-- Opis: Jako zalogowany użytkownik, chcę mieć dostęp do strony profilu, gdzie mogę przeglądać i edytować moje zapisane preferencje podróżnicze.
-- Kryteria akceptacji:
-  - W aplikacji jest dostępna sekcja "Profil".
-  - W profilu wyświetlane są wszystkie kategorie preferencji z aktualnie zapisanymi wartościami.
-  - Użytkownik może zmienić każdą z preferencji (Budżet, Zainteresowania, etc.).
-  - Zmiany muszą być zatwierdzone przyciskiem "Zapisz".
-  - Po zapisaniu zmian, system wyświetla potwierdzenie.
+US-004  
+Tytuł: Reset hasła  
+Opis: Jako użytkownik chcę zresetować hasło przez email.  
+Kryteria akceptacji:
 
-### Generowanie i Zarządzanie Planami Podróży
+- Formularz resetu wysyła email z linkiem.
+- Po sukcesie wyświetla się potwierdzenie.
+- Błędny email skutkuje komunikatem o błędzie.
 
-- ID: US-006
-- Tytuł: Tworzenie nowego planu podróży
-- Opis: Jako zalogowany użytkownik, chcę wypełnić prosty formularz, aby wygenerować nowy plan podróży dostosowany do moich potrzeb.
-- Kryteria akceptacji:
-  - Formularz zawiera pola: "Miasto" (tekst), "Daty" (wybór zakresu), "Liczba osób" (liczba).
-  - Formularz zawiera opcjonalne pole tekstowe "Notatki dla AI".
-  - Po kliknięciu "Generuj plan", system komunikuje, że proces jest w toku (np. loader).
-  - Po pomyślnym wygenerowaniu, użytkownik widzi ekran ze szczegółami nowego planu.
-  - Plan jest automatycznie zapisywany na liście planów użytkownika.
+US-005  
+Tytuł: Ograniczenie dostępu do danych  
+Opis: Jako użytkownik chcę, aby tylko ja widział swoje talie i fiszki.  
+Kryteria akceptacji:
 
-- ID: US-007
-- Tytuł: Wyświetlanie pustego dashboardu
-- Opis: Jako nowy użytkownik, który nie stworzył jeszcze żadnego planu, po zalogowaniu chcę zobaczyć na dashboardzie zachętę do stworzenia pierwszej podróży.
-- Kryteria akceptacji:
-  - Jeśli lista planów użytkownika jest pusta, dashboard wyświetla specjalny komunikat (np. "Nie masz jeszcze żadnych planów. Stwórz swój pierwszy!").
-  - Na ekranie widoczny jest wyraźny przycisk "Stwórz nowy plan", który przenosi do formularza generowania.
+- Próba dostępu do cudzych zasobów jest blokowana.
+- Widoki i API zwracają wyłącznie zasoby zalogowanego użytkownika.
+- Testy bezpieczeństwa potwierdzają brak dostępu krzyżowego.
 
-- ID: US-008
-- Tytuł: Przeglądanie listy zapisanych planów
-- Opis: Jako użytkownik, który ma już zapisane plany, chcę widzieć ich listę na moim dashboardzie, aby móc łatwo do nich wrócić.
-- Kryteria akceptacji:
-  - Dashboard wyświetla listę wszystkich zapisanych planów.
-  - Lista jest posortowana chronologicznie (od najnowszej daty podróży).
-  - Każdy element na liście zawiera nazwę planu (np. "Wycieczka do Rzymu"), daty i miasto.
-  - Kliknięcie na element listy przenosi do widoku szczegółowego danego planu.
+US-006  
+Tytuł: Onboarding – pusty stan  
+Opis: Jako nowy użytkownik chcę zobaczyć instrukcję i CTA do stworzenia pierwszej talii przez AI.  
+Kryteria akceptacji:
 
-- ID: US-009
-- Tytuł: Wyświetlanie szczegółów planu podróży
-- Opis: Jako użytkownik, chcę móc wyświetlić szczegóły wygenerowanego planu, aby zapoznać się z proponowanymi atrakcjami i harmonogramem.
-- Kryteria akceptacji:
-  - Widok szczegółowy prezentuje plan w podziale na dni.
-  - Dla każdego dnia wyświetlana jest lista atrakcji.
-  - Każda atrakcja ma oznaczenie "płatna" lub "darmowa".
-  - Między atrakcjami widoczne są szacunkowe czasy transportu.
-  - Pod całym planem znajduje się disclaimer o orientacyjnym charakterze danych.
-  - Na stronie widoczny jest mechanizm oceny planu (kciuki).
+- Pusty stan jest widoczny, gdy użytkownik nie ma żadnych talii.
+- CTA prowadzi do ekranu generowania AI.
+- Po utworzeniu pierwszej talii pusty stan znika.
 
-- ID: US-010
-- Tytuł: Edycja nazwy planu podróży
-- Opis: Jako użytkownik, chcę mieć możliwość zmiany automatycznie wygenerowanej nazwy mojego planu na własną, aby łatwiej go identyfikować.
-- Kryteria akceptacji:
-  - W widoku listy planów lub w widoku szczegółowym znajduje się opcja edycji nazwy.
-  - Użytkownik może wprowadzić nową nazwę i ją zapisać.
-  - Nowa nazwa jest widoczna na liście planów i w widoku szczegółowym.
+US-007  
+Tytuł: Wklejenie tekstu do generacji (≤10 000 znaków)  
+Opis: Jako użytkownik chcę wkleić materiał do pola wejściowego.  
+Kryteria akceptacji:
 
-- ID: US-011
-- Tytuł: Usuwanie planu podróży
-- Opis: Jako użytkownik, chcę mieć możliwość usunięcia planu, którego już nie potrzebuję, aby utrzymać porządek na mojej liście.
-- Kryteria akceptacji:
-  - Na liście planów lub w widoku szczegółowym znajduje się opcja "Usuń".
-  - Przed ostatecznym usunięciem system wyświetla modal z prośbą o potwierdzenie ("Czy na pewno chcesz usunąć ten plan?").
-  - Po potwierdzeniu, plan jest trwale usuwany z konta użytkownika, a użytkownik wraca do dashboardu.
+- Licznik znaków aktualizuje się w czasie rzeczywistym.
+- Dla ≤10 000 znaków można uruchomić generację.
+- Dla >10 000 znaków przycisk generacji jest zablokowany i wyświetla się komunikat.
 
-- ID: US-012
-- Tytuł: Obsługa błędu generowania planu
-- Opis: Jako użytkownik, w przypadku gdy AI nie uda się wygenerować planu, chcę zobaczyć zrozumiały komunikat o błędzie i sugestię, co robić dalej.
-- Kryteria akceptacji:
-  - Jeśli proces generowania planu zakończy się niepowodzeniem, zamiast planu wyświetlany jest komunikat błędu.
-  - Komunikat jest przyjazny (np. "Niestety, nie udało się wygenerować planu. Spróbuj ponownie później lub zmień zapytanie.").
-  - Użytkownik ma możliwość łatwego powrotu do formularza, aby spróbować ponownie.
+US-008  
+Tytuł: Uruchomienie generacji AI  
+Opis: Jako użytkownik chcę wygenerować fiszki z wklejonego tekstu.  
+Kryteria akceptacji:
 
-### Zbieranie opinii
+- Kliknięcie Generuj rozpoczyna proces; widoczny jest stan ładowania.
+- Po sukcesie widzę listę wygenerowanych fiszek (Pytanie/Odpowiedź).
+- Po błędzie widzę komunikat i mogę spróbować ponownie.
 
-- ID: US-013
-- Tytuł: Ocena wygenerowanego planu
-- Opis: Jako użytkownik, chcę móc ocenić wygenerowany plan za pomocą przycisków "kciuk w górę" lub "kciuk w dół", aby przekazać swoją opinię o jego jakości.
-- Kryteria akceptacji:
-  - Pod każdym planem znajdują się dwie klikalne ikony: kciuk w górę i kciuk w dół.
-  - Użytkownik może wybrać tylko jedną z opcji.
-  - Po kliknięciu, wybór jest zapisywany w systemie, a interfejs wizualnie potwierdza oddanie głosu (np. podświetlenie ikony).
+US-009  
+Tytuł: Limit generacji 15/24h  
+Opis: Jako użytkownik nie chcę przekraczać limitu kosztów; po osiągnięciu limitu chcę jasny komunikat.  
+Kryteria akceptacji:
 
-- ID: US-014
-- Tytuł: Dodawanie komentarza do oceny
-- Opis: Jako użytkownik, po ocenieniu planu, chcę mieć możliwość dodania opcjonalnego komentarza, aby przekazać bardziej szczegółowe uwagi.
-- Kryteria akceptacji:
-  - Po kliknięciu na kciuk w górę/dół pojawia się pole tekstowe do wpisania komentarza.
-  - Użytkownik może wpisać tekst i go przesłać.
-  - Przesłanie komentarza jest opcjonalne.
-  - Po wysłaniu komentarza system wyświetla potwierdzenie (np. "Dziękujemy za Twoją opinię!").
+- Po osiągnięciu limitu pojawia się informacja o limicie i czasie do resetu.
+- Do czasu resetu przycisk generacji jest nieaktywny.
+- Widoczny jest licznik wykorzystania (np. 7/15).
+
+US-010  
+Tytuł: Przegląd wygenerowanych fiszek  
+Opis: Jako użytkownik chcę przeglądać fiszki na liście.  
+Kryteria akceptacji:
+
+- Każda fiszka prezentuje Pytanie i Odpowiedź.
+- Lista wspiera przewijanie przy dużej liczbie pozycji.
+- Brak fiszek po generacji skutkuje komunikatem i możliwością ponownej próby.
+
+US-011  
+Tytuł: Edycja wygenerowanej fiszki  
+Opis: Jako użytkownik chcę edytować treść Pytania/Odpowiedzi przed akceptacją.  
+Kryteria akceptacji:
+
+- Edycja jest możliwa inline lub w modalnym formularzu.
+- Walidacja pustych pól blokuje zapis.
+- Zmiany są widoczne na liście przed akceptacją.
+
+US-012  
+Tytuł: Akceptacja/Odrzucenie pojedynczej fiszki  
+Opis: Jako użytkownik chcę oznaczyć fiszkę jako akceptowaną lub odrzuconą.  
+Kryteria akceptacji:
+
+- Kliknięcie Akceptuj/Odrzuć zmienia stan fiszki.
+- Fiszka odrzucona nie będzie zapisana w systemie po zakończeniu procesu.
+- Statusy są czytelnie wyróżnione.
+
+US-013  
+Tytuł: Zaznacz/Odznacz wszystkie  
+Opis: Jako użytkownik chcę szybko zaznaczyć lub odznaczyć wszystkie fiszki.  
+Kryteria akceptacji:
+
+- Przycisk zaznacza wszystkie do akceptacji lub odznacza wszystkie.
+- Działa prawidłowo z filtrami i po edycjach.
+- Zmiana jest odzwierciedlona w liczniku wybranych fiszek.
+
+US-014  
+Tytuł: Zapis zaakceptowanych fiszek jako nowej talii  
+Opis: Jako użytkownik chcę nazwać i zapisać talię po akceptacji fiszek.  
+Kryteria akceptacji:
+
+- Jeśli zaakceptowano ≥1 fiszkę, pojawia się krok nazwania talii.
+- Nazwa jest wymagana (niepusta) i zapisywana.
+- Po zapisie pojawia się potwierdzenie i przejście do widoku talii.
+
+US-015  
+Tytuł: Brak zaakceptowanych fiszek  
+Opis: Jako użytkownik przy braku akceptowanych fiszek nie mogę zapisać talii.  
+Kryteria akceptacji:
+
+- Przycisk Zapisz jest nieaktywny przy 0 zaakceptowanych.
+- Widoczny jest komunikat z instrukcją akceptacji.
+- Możliwość powrotu do edycji/generacji.
+
+US-016  
+Tytuł: Widok listy talii  
+Opis: Jako użytkownik chcę zobaczyć listę moich talii.  
+Kryteria akceptacji:
+
+- Lista pokazuje nazwę i liczbę fiszek każdej talii.
+- Kliknięcie talii prowadzi do jej szczegółów.
+- Brak talii wyświetla pusty stan z CTA.
+
+US-017  
+Tytuł: Zmiana nazwy talii  
+Opis: Jako użytkownik chcę zmienić nazwę wybranej talii.  
+Kryteria akceptacji:
+
+- Formularz zmiany nazwy waliduje puste wartości.
+- Po sukcesie nowa nazwa jest widoczna na liście i w szczegółach.
+- Błędy zapisu są komunikowane.
+
+US-018  
+Tytuł: Usunięcie talii z potwierdzeniem  
+Opis: Jako użytkownik chcę trwale usunąć talię po potwierdzeniu.  
+Kryteria akceptacji:
+
+- Akcja wymaga potwierdzenia (okno dialogowe).
+- Po usunięciu talia i jej fiszki znikają z listy.
+- Operacja jest nieodwracalna (MVP).
+
+US-019  
+Tytuł: Podgląd fiszek w talii  
+Opis: Jako użytkownik chcę przeglądać fiszki w wybranej talii.  
+Kryteria akceptacji:
+
+- Lista fiszek pokazuje pytanie i skrót odpowiedzi.
+- Paginacja lub scroll przy większych zestawach.
+- Brak fiszek wyświetla pusty stan z CTA dodania.
+
+US-020  
+Tytuł: Edycja fiszki w talii  
+Opis: Jako użytkownik chcę edytować pytanie/odpowiedź istniejącej fiszki.  
+Kryteria akceptacji:
+
+- Edycja waliduje niepuste pola.
+- Zmiany są zapisywane i widoczne po odświeżeniu widoku.
+- Błąd zapisu jest komunikowany.
+
+US-021  
+Tytuł: Usunięcie fiszki  
+Opis: Jako użytkownik chcę usunąć fiszkę z talii po potwierdzeniu.  
+Kryteria akceptacji:
+
+- Akcja wymaga potwierdzenia.
+- Fiszka znika z listy po usunięciu.
+- Operacja jest nieodwracalna (MVP).
+
+US-022  
+Tytuł: Ręczne dodanie fiszki do istniejącej talii  
+Opis: Jako użytkownik chcę dodać nową fiszkę do wybranej talii.  
+Kryteria akceptacji:
+
+- Formularz wymaga pytania i odpowiedzi.
+- Po sukcesie fiszka pojawia się na liście.
+- Błędne lub puste dane blokują zapis.
+
+US-023  
+Tytuł: Ręczne utworzenie nowej talii przy dodawaniu fiszki  
+Opis: Jako użytkownik chcę utworzyć nową talię i dodać do niej ręczną fiszkę.  
+Kryteria akceptacji:
+
+- Formularz umożliwia wprowadzenie nazwy nowej talii.
+- Po sukcesie tworzona jest talia i pierwsza fiszka.
+- Błędy walidacyjne są komunikowane.
+
+US-024  
+Tytuł: Rozpoczęcie sesji nauki  
+Opis: Jako użytkownik chcę rozpocząć naukę wybranej talii.  
+Kryteria akceptacji:
+
+- Start sesji zawiera wszystkie due fiszki.
+- Jeśli to pierwsza sesja nowej talii, wszystkie fiszki są due.
+- Widok pokazuje pytanie; odpowiedź jest ukryta do czasu interakcji.
+
+US-025  
+Tytuł: Ujawnienie odpowiedzi  
+Opis: Jako użytkownik chcę odsłonić odpowiedź po kliknięciu.  
+Kryteria akceptacji:
+
+- Kliknięcie pokaż odpowiedź odsłania rewers.
+- Po odsłonięciu widoczne są przyciski Wiem / Nie wiem.
+- Nawigacja do kolejnej fiszki następuje po ocenie.
+
+US-026  
+Tytuł: Ocena Wiem  
+Opis: Jako użytkownik chcę oznaczyć fiszkę jako opanowaną.  
+Kryteria akceptacji:
+
+- Po Wiem poziom fiszki wzrasta o 1 (max 3).
+- Ustalany jest termin kolejnej powtórki zgodnie z poziomem (3 dni dla poziomu 2, 7 dni dla poziomu 3).
+- Fiszka nie pojawia się ponownie w bieżącej sesji, jeśli już oceniona.
+
+US-027  
+Tytuł: Ocena Nie wiem  
+Opis: Jako użytkownik chcę oznaczyć fiszkę jako nieopanowaną.  
+Kryteria akceptacji:
+
+- Po Nie wiem poziom fiszki ustawia się na 1.
+- Termin kolejnej powtórki to 1 dzień.
+- Fiszka nie pojawia się ponownie w bieżącej sesji, jeśli już oceniona.
+
+US-028  
+Tytuł: Zakończenie sesji nauki  
+Opis: Jako użytkownik chcę jasny koniec sesji, gdy nie ma już due fiszek.  
+Kryteria akceptacji:
+
+- Gdy brak due fiszek, widoczny jest ekran zakończenia sesji.
+- Ekran zawiera krótkie podsumowanie (liczba fiszek, wyniki Wiem/Nie wiem).
+- Dostępne są CTA: powrót do talii lub nauka innej talii.
+
+US-029  
+Tytuł: Zgłoszenie problemu z fiszką  
+Opis: Jako użytkownik chcę zgłosić problem z konkretną fiszką.  
+Kryteria akceptacji:
+
+- Formularz przyjmuje krótki opis.
+- Po wysłaniu pojawia się potwierdzenie.
+- Zgłoszenie jest zapisywane z identyfikatorem fiszki i czasem.
+
+US-030  
+Tytuł: Obsługa błędu generacji AI  
+Opis: Jako użytkownik chcę zrozumiały komunikat i możliwość ponowienia po błędzie.  
+Kryteria akceptacji:
+
+- W przypadku błędu wyświetla się komunikat z sugestią działania.
+- Przycisk spróbuj ponownie jest dostępny.
+- Brak utraty już wprowadzonych danych wejściowych.
+
+US-031  
+Tytuł: Widoczność wykorzystania limitu AI  
+Opis: Jako użytkownik chcę widzieć, ile generacji wykorzystałem.  
+Kryteria akceptacji:
+
+- Licznik pokazuje aktualny stan (np. 7/15).
+- Po przekroczeniu limitu pojawia się informacja o czasie do resetu.
+- Po resecie licznik wraca do 0.
+
+US-032  
+Tytuł: Walidacja pól przy edycji/dodawaniu fiszek  
+Opis: Jako użytkownik chcę uniknąć zapisania pustych wartości.  
+Kryteria akceptacji:
+
+- Puste pytanie lub odpowiedź blokują zapis.
+- Komunikat wskazuje brakujące pole.
+- Po uzupełnieniu zapis jest możliwy.
+
+US-033  
+Tytuł: Usuwanie fiszki z potwierdzeniem  
+Opis: Jako użytkownik chcę potwierdzić usunięcie fiszki, aby uniknąć przypadkowej utraty.  
+Kryteria akceptacji:
+
+- Dialog potwierdzenia jest wymagany.
+- Po potwierdzeniu fiszka znika z listy.
+- Operacja nieodwracalna w MVP.
+
+US-034  
+Tytuł: Ochrona zasobów API i widoków  
+Opis: Jako użytkownik chcę mieć pewność, że inni nie zobaczą moich danych.  
+Kryteria akceptacji:
+
+- Zapytania API są filtrowane po użytkowniku (RLS).
+- Bez ważnej sesji żądania chronione są odrzucane.
+- Testy potwierdzają brak wycieku danych między kontami.
+
+US-035  
+Tytuł: Analityka sesji nauki  
+Opis: Jako produkt chcę zliczać sesje nauki do metryk zaangażowania.  
+Kryteria akceptacji:
+
+- Zdarzenia start i koniec sesji są emitowane.
+- Dane pozwalają policzyć liczbę sesji/tydzień/użytkownika.
+- Brak danych wrażliwych w eventach.
 
 ## 6. Metryki sukcesu
 
-### Cele główne
+6.1. Jakość generacji AI
 
-- Zaangażowanie użytkowników: 75% aktywnych użytkowników generuje 3 lub więcej planów wycieczek w ciągu roku.
-- Adopcja profilu: 90% zarejestrowanych użytkowników posiada w pełni wypełnione preferencje turystyczne w swoim profilu.
+- Definicja: odsetek zaakceptowanych fiszek względem wszystkich wygenerowanych przez AI.
+- Cel: 75% fiszek wygenerowanych przez AI jest akceptowanych przez użytkownika.
+- Implementacja: zdarzenia ai_generation_success z liczbą fiszek wygenerowanych i zaakceptowanych; agregacja per użytkownik i globalnie.
 
-### Wskaźniki krótkoterminowe
+  6.2. Adopcja funkcji AI
 
-- Aktywacja użytkowników: Wysoki odsetek (do zdefiniowania, np. >50%) nowo zarejestrowanych użytkowników generuje swój pierwszy plan w ciągu 7 dni od rejestracji.
+- Definicja: udział fiszek stworzonych przez AI w stosunku do wszystkich fiszek (AI + manualne).
+- Cel: 75% fiszek stworzone z wykorzystaniem AI.
+- Implementacja: eventy card_created_manual i deck_created z metadanymi o pochodzeniu fiszek; obliczanie udziału.
 
-### Metryki jakościowe
+  6.3. Zaangażowanie w naukę
 
-- Pętla informacji zwrotnej: Cotygodniowy, manualny przegląd ocen (👍/👎) i komentarzy pozostawionych przez użytkowników. Celem jest identyfikacja wzorców i słabych punktów w generowanych planach w celu iteracyjnego ulepszania promptów AI.
+- Metryka 1: średnia liczba sesji nauki na użytkownika tygodniowo.
+- Metryka 2: retencja 7-dniowa (odsetek użytkowników, którzy wracają w ciągu 7 dni od rejestracji).
+- Implementacja: study_session_start/end, powiązanie z datą rejestracji.
+
+  6.4. Dodatkowe wskaźniki operacyjne
+
+- Użycie limitu AI: rozkład dzienny liczników, odsetek użytkowników osiągających limit.
+- Stabilność generacji: odsetek udanych generacji vs błędy.
+- Czas do pierwszej wartości: czas od rejestracji do utworzenia pierwszej talii i pierwszej sesji nauki.
+
+  6.5. Progi i alerty (rekomendowane)
+
+- Alert przy wzroście błędów generacji AI powyżej ustalonego progu.
+- Alert przy spadku odsetka akceptacji fiszek AI poniżej 50% w ujęciu 7-dniowym.
