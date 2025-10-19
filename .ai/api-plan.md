@@ -179,7 +179,9 @@ X-RateLimit-Reset: 1729432620
     "name": "Biology Basics",
     "description": "Fundamental biology concepts",
     "cardsTotal": 3,
-    "createdAt": "2025-10-19T13:40:00Z"
+    "dueCount": 0,
+    "createdAt": "2025-10-19T13:40:00Z",
+    "updatedAt": "2025-10-19T13:40:00Z"
   },
   "acceptedCount": 3
 }

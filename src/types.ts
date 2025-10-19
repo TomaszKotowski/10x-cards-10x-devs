@@ -171,7 +171,7 @@ export interface AIGeneratedCardDTO {
  */
 export interface GenerateCardsResponseDTO {
   generationId: string;
-  status: string;
+  status: "succeeded" | "failed";
   cards: AIGeneratedCardDTO[];
   createdAt: string; // ISO 8601 timestamp
 }
@@ -258,7 +258,7 @@ export interface CardDTO {
   id: string;
   question: string;
   answer: string;
-  origin: string; // "manual" | "ai"
+  origin: "manual" | "ai"; // "manual" | "ai"
   leitnerBox: number; // 1-3
   dueAt: string; // ISO 8601 timestamp
   lastReviewedAt: string | null; // ISO 8601 timestamp
@@ -369,7 +369,7 @@ export interface CardIssueReportDTO {
   id: string;
   cardId: string;
   description: string;
-  status: string; // "open" | "in_review" | "resolved" | "dismissed"
+  status: "open" | "in_review" | "resolved" | "dismissed"; // "open" | "in_review" | "resolved" | "dismissed"
   resolutionNotes: string | null;
   createdAt: string; // ISO 8601 timestamp
   updatedAt: string; // ISO 8601 timestamp
@@ -433,7 +433,7 @@ export function mapCardToDTO(card: Card): CardDTO {
     id: card.id,
     question: card.question,
     answer: card.answer,
-    origin: card.origin,
+    origin: card.origin as "manual" | "ai",
     leitnerBox: card.leitner_box,
     dueAt: card.due_at,
     lastReviewedAt: card.last_reviewed_at,
@@ -491,7 +491,7 @@ export function mapCardIssueReportToDTO(report: CardIssueReport): CardIssueRepor
     id: report.id,
     cardId: report.card_id,
     description: report.description,
-    status: report.status,
+    status: report.status as "open" | "in_review" | "resolved" | "dismissed",
     resolutionNotes: report.resolution_notes,
     createdAt: report.created_at,
     updatedAt: report.updated_at,
