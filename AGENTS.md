@@ -34,3 +34,11 @@
 - Never commit secrets. Copy `.env.example` to `.env` and set `SUPABASE_URL`, `SUPABASE_KEY`, `OPENROUTER_API_KEY`.
 - Use Node version from `.nvmrc` (v22.14.0). Install via `nvm use`.
 - Prefer alias imports (`@/lib/utils`) over deep relative paths.
+
+## Development Setup
+
+- **Server Port**: The Astro development server runs on port 3000 (configured in astro.config.mjs under server: { port: 3000 }).
+- **Running the Server**: Use npm run dev (or equivalent in your package.json) to start the development server at http://localhost:3000.
+- **Environment Variables**: Ensure .env.local includes required keys like SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY for local development.
+- **API Testing**: API endpoints under src/pages/api are accessible at http://localhost:3000/api/... during development.
+- **Always Check Config Files**: Before assuming defaults (e.g., ports, adapters), refer to astro.config.mjs, package.json, and environment files for project-specific overrides.

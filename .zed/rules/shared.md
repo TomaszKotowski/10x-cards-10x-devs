@@ -2,7 +2,7 @@
 trigger: always_on
 ---
 
-# AI Rules for VibeTravels
+# AI Rules for 10x-cards (MVP)
 
 # Aplikacja - 10x-cards (MVP)
 
